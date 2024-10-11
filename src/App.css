@@ -1,0 +1,191 @@
+:root {
+  --bg-color: #242424;
+  --card-bg-color: #1d1d1f;
+  --header-bg-color: #000000;
+  --text-color: rgba(255, 255, 255, 0.87);
+  --highlight-color: rgba(255, 255, 255, 0.6);
+  --green-color: rgba(76, 175, 80, .85);
+  --orange-color: rgba(255, 152, 0, .85);
+  --red-color: rgba(244, 67, 54, .85);
+  --white-color: rgba(255, 255, 255, 0.87);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
+@media(prefers-color-scheme: light) {
+  :root {
+    --bg-color: #ffffff;
+    --card-bg-color: #fdfeff;
+    --text-color: rgba(0, 0, 0, 0.87);
+    --highlight-color: rgba(0, 0, 0, 0.6);
+    --green-color: rgba(76, 175, 80, 1);
+    --orange-color: rgba(255, 152, 0, .85);
+    --red-color: rgb(224, 49, 36);
+  }
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--header-bg-color);
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+}
+@media (max-width: 60rem) {
+  .header {
+    height: 10rem;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: center;
+    position: relative;
+    top: auto;
+  }
+}
+
+.header h1 {
+  font-family: Impact, Haettenschweiler, 'Arial Bold', sans-serif;
+  font-size: 3.25rem;
+  font-weight: 600;
+  color: var(--orange-color);
+  margin-right: 2rem;
+}
+@media (max-width: 60rem) {
+  .header h1 {
+    margin: 0;
+  }
+}
+
+.header .search-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 60rem) {
+  .header .search-container {
+    width: 100%;
+    margin: 0 0.25rem;
+  }
+}
+
+.header .search-container label {
+  position: relative;
+  fill: var(--text-color);
+  top: .125rem;
+  left: 2.5rem;
+}
+
+.header .search-container input {
+  box-sizing: border-box;
+  min-width: 10rem;
+  height: 3rem;
+  padding: 0.5rem 2.75rem;
+  border-radius: 100px;
+  border: 1px solid var(--card-bg-color);
+  outline: none;
+  background-color: var(--card-bg-color);
+  color: var(--text-color);
+  font-size: 1.25rem;
+}
+@media (max-width: 60rem) {
+  .header .search-container input {
+    font-size: .875rem;
+    width: 100%;
+  }
+}
+.header .search-container input::placeholder {
+  color: var(--highlight-color);
+}
+.header .search-container input:focus {
+  border: 1px solid var(--highlight-color);
+  outline: none;
+}
+
+.content {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+.content h2.page-title {
+  box-sizing: border-box;
+  font-size: 2.5rem;
+  font-weight: 600;
+  min-height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+}
+@media (max-width: 90rem) {
+  .content h2.page-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    margin: 0;
+    width: 100%;
+    min-height: 3.5rem;
+    top: 6rem;
+  }
+}
+@media (max-width: 60rem) {
+  .content h2.page-title {
+    font-size: 1.5rem;
+    top: 0rem;
+  }
+}
+
+.content h3.error-message {
+  box-sizing: border-box;
+  background-color: var(--red-color);
+  color: var(--white-color);
+  width: 100%;
+  z-index: 250;
+  text-align: center;
+  position: sticky;
+  top: 6rem;
+}
+@media (max-width: 60rem) {
+  .content h3.error-message {
+    top: 4rem;
+  }
+}
+
+.results {
+  box-sizing: border-box;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 20rem);
+  justify-content: center;
+  align-items: start;
+  gap: 1.5rem;
+  padding: 1rem;
+}
