@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useState } from "react";
 import "./SearchInput.css";
 
 interface Props {
@@ -7,6 +7,19 @@ interface Props {
 
 const SearchInput = ({ onSearch }: Props) => {
   const seacrchInputId = useId();
+  const [timer, setTimer] = useState<number | null>(null);
+
+  const debounceSearch = (searchTerm: string) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    setTimer(
+      setTimeout(() => {
+        onSearch(searchTerm);
+      }, 300)
+    );
+  };
 
   return (
     <div className="search-container">
@@ -25,7 +38,9 @@ const SearchInput = ({ onSearch }: Props) => {
         className="search"
         id={seacrchInputId}
         placeholder="Search for movies"
-        onInput={(event) => {onSearch(event.currentTarget.value)}}
+        onInput={(event) => {
+          debounceSearch(event.currentTarget.value);
+        }}
       />
     </div>
   );
