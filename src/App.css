@@ -76,52 +76,6 @@
   }
 }
 
-.header .search-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-@media (max-width: 60rem) {
-  .header .search-container {
-    width: 100%;
-    margin: 0 0.25rem;
-  }
-}
-
-.header .search-container label {
-  position: relative;
-  fill: var(--text-color);
-  top: .125rem;
-  left: 2.5rem;
-}
-
-.header .search-container input {
-  box-sizing: border-box;
-  min-width: 10rem;
-  height: 3rem;
-  padding: 0.5rem 2.75rem;
-  border-radius: 100px;
-  border: 1px solid var(--card-bg-color);
-  outline: none;
-  background-color: var(--card-bg-color);
-  color: var(--text-color);
-  font-size: 1.25rem;
-}
-@media (max-width: 60rem) {
-  .header .search-container input {
-    font-size: .875rem;
-    width: 100%;
-  }
-}
-.header .search-container input::placeholder {
-  color: var(--highlight-color);
-}
-.header .search-container input:focus {
-  border: 1px solid var(--highlight-color);
-  outline: none;
-}
-
 .content {
   box-sizing: border-box;
   width: 100%;
