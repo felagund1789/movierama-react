@@ -1,5 +1,7 @@
 import "./App.css";
 import SearchInput from "./components/searchInput/SearchInput";
+import movies from "./assets/data/movies.json";
+import MovieCard from "./components/movieCard/MovieCard";
 
 function App() {
   return (
@@ -19,7 +21,11 @@ function App() {
         <h2 id="page-title" className="page-title">
           In Theaters
         </h2>
-        <div className="results"></div>
+        <div className="results">
+          {movies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
       </main>
       <footer></footer>
     </>
