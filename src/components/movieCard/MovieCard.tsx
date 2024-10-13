@@ -1,5 +1,6 @@
 import useGenres from "../../hooks/useGenres";
 import { Movie } from "../../types";
+import ExpandableText from "../ExpandableText";
 import GenreTag from "../genreTag/GenreTag";
 import VoteAverage from "../voteAverage/VoteAverage";
 import "./MovieCard.css";
@@ -40,7 +41,9 @@ const MovieCard = ({ movie }: Props) => {
             <GenreTag key={genreId}>{getGenreName(genreId)}</GenreTag>
           ))}
         </div>
-        <div className="movie-overview">{movie.overview}</div>
+        <div className="movie-overview">
+          <ExpandableText maxCharacters={180}>{movie.overview}</ExpandableText>
+        </div>
       </div>
     </div>
   );
