@@ -23,7 +23,6 @@ const useMovies = (movieQuery: MovieQuery) => {
       })
       .catch((error) => {
         console.error(error);
-        setMovies([]);
         setIsLoading(false);
         setError((error as Error).message);
       });

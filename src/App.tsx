@@ -4,10 +4,12 @@ import SearchInput from "./components/searchInput/SearchInput";
 import SearchResults from "./components/SearchResults";
 import useMovies from "./hooks/useMovies";
 import { MovieQuery } from "./types";
+import ErrorMessage from "./components/ErrorMessage";
+import Loading from "./components/Loading";
 
 function App() {
   const [movieQuery, setMovieQuery] = useState<MovieQuery>({ page: 1, query: "" });
-  const { movies } = useMovies(movieQuery);
+  const { movies, isLoading, error } = useMovies(movieQuery);
 
   return (
     <>
@@ -16,13 +18,8 @@ function App() {
         <SearchInput onSearch={(searchTerm) => setMovieQuery({...movieQuery, query: searchTerm})} />
       </header>
       <main className="content">
-        <h3
-          id="error-message"
-          className="error-message"
-          style={{ display: "none" }}
-        >
-          Error
-        </h3>
+        <Loading isLoading={isLoading} />
+        { error && <ErrorMessage error={error} /> }
         <SearchResults movies={movies} searchText={movieQuery.query} />
       </main>
       <footer></footer>
