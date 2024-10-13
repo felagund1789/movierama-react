@@ -1,9 +1,19 @@
+import { useEffect, useState } from "react";
 import "./App.css";
-import SearchInput from "./components/searchInput/SearchInput";
-import movies from "./assets/data/movies.json";
 import MovieCard from "./components/movieCard/MovieCard";
+import SearchInput from "./components/searchInput/SearchInput";
+import movieService from "./services/movieService";
+import { Movie } from "./types";
 
 function App() {
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    movieService.getNowPlaying({ page: 1 }).then((response) => {
+      setMovies(response.results);
+    });
+  }, []);
+
   return (
     <>
       <header className="header">
