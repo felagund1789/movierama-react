@@ -1,17 +1,14 @@
-import { Movie } from "../types";
+import { MovieQuery, MoviesResponse } from "../types";
 import apiClient from "./apiClient";
-
-interface MoviesResponse {
-  page: number;
-  results: Movie[];
-  total_pages: number;
-  total_results: number;
-}
 
 class MovieService {
   
   getNowPlaying = async ({ page }: { page: number }): Promise<MoviesResponse> => {
     return apiClient.fetch<MoviesResponse>(`/movie/now_playing?page=${page.toString()}`);
+  }
+
+  searchMovies = async ({ page, query }: MovieQuery): Promise<MoviesResponse> => {
+    return apiClient.fetch<MoviesResponse>(`/search/movie?query=${encodeURIComponent(query)}&page=${page.toString()}`);
   }
 }
 

@@ -39,7 +39,7 @@ const SearchInput = ({ onSearch }: Props) => {
         id={seacrchInputId}
         placeholder="Search for movies"
         onInput={(event) => {
-          debounceSearch(event.currentTarget.value);
+          debounceSearch(event.currentTarget.value ?? "");
         }}
       />
     </div>

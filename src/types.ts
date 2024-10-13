@@ -3,6 +3,10 @@ export interface Genre {
   name: string;
 }
 
+export interface GenresResponse {
+  genres: Genre[];
+}
+
 export interface Movie {
   adult: boolean;
   backdrop_path: string;
@@ -18,4 +22,16 @@ export interface Movie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+}
+
+export interface MoviesResponse {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
+}
+
+export interface MovieQuery {
+  page: number;
+  query: string;
 }

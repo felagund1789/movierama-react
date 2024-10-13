@@ -1,24 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import MovieCard from "./components/movieCard/MovieCard";
 import SearchInput from "./components/searchInput/SearchInput";
-import movieService from "./services/movieService";
-import { Movie } from "./types";
+import SearchResults from "./components/SearchResults";
+import useMovies from "./hooks/useMovies";
+import { MovieQuery } from "./types";
 
 function App() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-
-  useEffect(() => {
-    movieService.getNowPlaying({ page: 1 }).then((response) => {
-      setMovies(response.results);
-    });
-  }, []);
+  const [movieQuery, setMovieQuery] = useState<MovieQuery>({ page: 1, query: "" });
+  const { movies } = useMovies(movieQuery);
 
   return (
     <>
       <header className="header">
         <h1>Movierama</h1>
-        <SearchInput onSearch={(searchTerm) => console.log(searchTerm)} />
+        <SearchInput onSearch={(searchTerm) => setMovieQuery({...movieQuery, query: searchTerm})} />
       </header>
       <main className="content">
         <h3
@@ -28,14 +23,7 @@ function App() {
         >
           Error
         </h3>
-        <h2 id="page-title" className="page-title">
-          In Theaters
-        </h2>
-        <div className="results">
-          {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-        </div>
+        <SearchResults movies={movies} searchText={movieQuery.query} />
       </main>
       <footer></footer>
     </>

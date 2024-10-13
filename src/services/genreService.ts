@@ -1,9 +1,5 @@
-import { Genre } from "../types";
+import { GenresResponse } from "../types";
 import apiClient from "./apiClient";
-
-interface GenresResponse {
-  genres: Genre[];
-}
 
 class GenreService {
   fetchGenres = async () => {
