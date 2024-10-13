@@ -1,3 +1,4 @@
+import useGenres from "../../hooks/useGenres";
 import { Movie } from "../../types";
 import GenreTag from "../genreTag/GenreTag";
 import VoteAverage from "../voteAverage/VoteAverage";
@@ -10,6 +11,12 @@ interface Props {
 }
 
 const MovieCard = ({ movie }: Props) => {
+  const { genres } = useGenres();
+  const getGenreName = (genreId?: number): string => {
+    const genre = genres.find((genre) => genre.id === genreId);
+    return genre?.name ?? "";
+  };
+
   return (
     <div className="card">
       <a href="">
@@ -29,8 +36,8 @@ const MovieCard = ({ movie }: Props) => {
           <VoteAverage average={movie.vote_average} />
         </div>
         <div className="movie-genres">
-          {movie.genre_ids.map((genre) => (
-            <GenreTag key={genre}>{genre.toString()}</GenreTag>
+          {movie.genre_ids.map((genreId) => (
+            <GenreTag key={genreId}>{getGenreName(genreId)}</GenreTag>
           ))}
         </div>
         <div className="movie-overview">{movie.overview}</div>
