@@ -14,7 +14,7 @@ function App() {
         <SearchInput onSearch={(searchTerm) => setMovieQuery({...movieQuery, query: searchTerm})} />
       </header>
       <main className="content">
-        <MovieGrid movieQuery={movieQuery} />
+        <MovieGrid movieQuery={movieQuery} onMovieSelected={(movie) => alert(movie.title)} />
       </main>
       <footer></footer>
     </>

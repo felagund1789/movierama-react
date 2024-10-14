@@ -1,13 +1,14 @@
 import useMovies from "../hooks/useMovies";
-import { MovieQuery } from "../types";
+import { Movie, MovieQuery } from "../types";
 import ErrorMessage from "./ErrorMessage";
 import Loading from "./Loading";
 import MovieCard from "./movieCard/MovieCard";
 
 interface Props {
   movieQuery: MovieQuery;
+  onMovieSelected: (movie: Movie) => void;
 }
-const MovieGrid = ({ movieQuery }: Props) => {
+const MovieGrid = ({ movieQuery, onMovieSelected }: Props) => {
   const { data: movies, isLoading, error } = useMovies(movieQuery);
   return (
     <>
@@ -20,7 +21,11 @@ const MovieGrid = ({ movieQuery }: Props) => {
       </h2>
       <div className="results">
         {movies?.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard
+            key={movie.id}
+            onClick={() => onMovieSelected(movie)}
+            movie={movie}
+          />
         ))}
       </div>
     </>

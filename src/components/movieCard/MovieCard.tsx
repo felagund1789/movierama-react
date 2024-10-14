@@ -9,9 +9,10 @@ const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 
 interface Props {
   movie: Movie;
+  onClick: () => void;
 }
 
-const MovieCard = ({ movie }: Props) => {
+const MovieCard = ({ movie, onClick }: Props) => {
   const { data: genres } = useGenres();
   const getGenreName = (genreId?: number): string => {
     const genre = genres?.find((genre) => genre.id === genreId);
@@ -19,8 +20,8 @@ const MovieCard = ({ movie }: Props) => {
   };
 
   return (
-    <div className="card">
-      <div>
+    <div className="card" >
+      <div onClick={onClick}>
         <img
           src={`${imageBaseURL}${movie.poster_path}`}
           alt={movie.title}
@@ -29,7 +30,7 @@ const MovieCard = ({ movie }: Props) => {
         />
       </div>
       <div className="card-content">
-        <div className="movie-title">
+        <div onClick={onClick} className="movie-title">
           {movie.title}
         </div>
         <div className="year-and-score">
