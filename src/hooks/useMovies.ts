@@ -1,37 +1,22 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import movieService from "../services/movieService";
-import { Movie, MovieQuery, MoviesResponse } from "../types";
+import { Movie, MovieQuery } from "../types";
 
 const useMovies = (movieQuery: MovieQuery) => {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    setIsLoading(true);
-    let moviesResponsePromise: Promise<MoviesResponse>;
-    if (movieQuery.query && movieQuery.query.trim().length > 0) {
-      moviesResponsePromise = movieService.searchMovies(movieQuery);
-    } else {
-      moviesResponsePromise = movieService.getNowPlaying(movieQuery);
-    }
-    moviesResponsePromise
-      .then((response) => {
-        setMovies(response.results);
-        setIsLoading(false);
-        setError(null);
-      })
-      .catch((error) => {
-        console.error(error);
-        setIsLoading(false);
-        setError((error as Error).message);
-      });
-
-    return () => controller.abort();
-  }, [movieQuery]);
-
-  return { movies, isLoading, error };
+  return useQuery<Movie[], Error>({
+    queryKey: ["movies", movieQuery],
+    queryFn: async () => {
+      if (movieQuery.query && movieQuery.query.trim().length > 0) {
+        return movieService
+          .searchMovies(movieQuery)
+          .then((response) => response.results);
+      } else {
+        return movieService
+          .getNowPlaying(movieQuery)
+          .then((response) => response.results);
+      }
+    },
+  });
 };
 
 export default useMovies;

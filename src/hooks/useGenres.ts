@@ -1,33 +1,14 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import genreService from "../services/genreService";
 import { Genre } from "../types";
 
 const useGenres = () => {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    setIsLoading(true);
-    genreService
-      .fetchGenres()
-      .then((response) => {
-        setGenres(response.genres);
-        setIsLoading(false);
-        setError(null);
-      })
-      .catch((error) => {
-        console.error(error);
-        setGenres([]);
-        setIsLoading(false);
-        setError((error as Error).message);
-      });
-
-    return () => controller.abort();
-  }, []);
-
-  return { genres, isLoading, error };
+  return useQuery<Genre[], Error>({
+    queryKey: ["genres"],
+    queryFn: () =>
+      genreService.fetchGenres().then((response) => response.genres),
+    staleTime: 24 * 60 * 60 * 1000, // 24 hours
+  });
 };
 
 export default useGenres;

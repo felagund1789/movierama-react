@@ -1,12 +1,11 @@
-import { Genre, Movie } from "../types";
+import { Movie } from "../types";
 import MovieCard from "./movieCard/MovieCard";
 
 interface Props {
-  genres: Genre[];
-  movies: Movie[];
+  movies?: Movie[];
   searchText: string;
 }
-const SearchResults = ({ genres, movies, searchText }: Props) => {
+const SearchResults = ({ movies, searchText }: Props) => {
   return (
     <>
       <h2 id="page-title" className="page-title">
@@ -15,8 +14,8 @@ const SearchResults = ({ genres, movies, searchText }: Props) => {
           : "In Theaters"}
       </h2>
       <div className="results">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} genres={genres} movie={movie} />
+        {movies?.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
     </>
