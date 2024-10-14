@@ -19,18 +19,18 @@ const MovieCard = ({ genres, movie }: Props) => {
 
   return (
     <div className="card">
-      <a href="">
+      <div>
         <img
           src={`${imageBaseURL}${movie.poster_path}`}
           alt={movie.title}
           title={movie.title}
           className="movie-poster"
         />
-      </a>
+      </div>
       <div className="card-content">
-        <a href="" className="movie-title">
+        <div className="movie-title">
           {movie.title}
-        </a>
+        </div>
         <div className="year-and-score">
           <h3 className="movie-year">{movie.release_date?.split("-")[0]}</h3>
           <VoteAverage average={movie.vote_average} />
