@@ -1,5 +1,4 @@
-import useGenres from "../../hooks/useGenres";
-import { Movie } from "../../types";
+import { Genre, Movie } from "../../types";
 import ExpandableText from "../ExpandableText";
 import GenreTag from "../genreTag/GenreTag";
 import VoteAverage from "../voteAverage/VoteAverage";
@@ -8,11 +7,11 @@ import "./MovieCard.css";
 const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 
 interface Props {
+  genres: Genre[];
   movie: Movie;
 }
 
-const MovieCard = ({ movie }: Props) => {
-  const { genres } = useGenres();
+const MovieCard = ({ genres, movie }: Props) => {
   const getGenreName = (genreId?: number): string => {
     const genre = genres.find((genre) => genre.id === genreId);
     return genre?.name ?? "";
