@@ -8,6 +8,7 @@ const useGenres = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
     setIsLoading(true);
     genreService
       .fetchGenres()
@@ -22,6 +23,8 @@ const useGenres = () => {
         setIsLoading(false);
         setError((error as Error).message);
       });
+
+    return () => controller.abort();
   }, []);
 
   return { genres, isLoading, error };

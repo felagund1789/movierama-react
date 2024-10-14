@@ -8,6 +8,7 @@ const useMovies = (movieQuery: MovieQuery) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const controller = new AbortController();
     setIsLoading(true);
     let moviesResponsePromise: Promise<MoviesResponse>;
     if (movieQuery.query && movieQuery.query.trim().length > 0) {
@@ -26,6 +27,8 @@ const useMovies = (movieQuery: MovieQuery) => {
         setIsLoading(false);
         setError((error as Error).message);
       });
+
+    return () => controller.abort();
   }, [movieQuery]);
 
   return { movies, isLoading, error };
