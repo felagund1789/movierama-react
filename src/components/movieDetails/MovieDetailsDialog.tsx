@@ -2,12 +2,14 @@ import { useEffect, useRef } from "react";
 import useMovieCast from "../../hooks/useMovieCast";
 import useMovieCrew from "../../hooks/useMovieCrew";
 import useMovieDetails from "../../hooks/useMovieDetails";
+import useMovieTrailers from "../../hooks/useMovieTrailers";
 import { Movie } from "../../types";
+import CreditInfoCard from "../creditInfoCard/CreditInfoCard";
 import GenreTag from "../genreTag/GenreTag";
 import ImdbTag from "../ImdbTag";
 import VoteAverage from "../voteAverage/VoteAverage";
 import "./MovieDetailsDialog.css";
-import CreditInfoCard from "../creditInfoCard/CreditInfoCard";
+import YoutubeTrailer from "../youtubeTrailer/YoutubeTrailer";
 
 const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 const imageFullBaseURL = import.meta.env.VITE_TMDB_IMAGE_FULL_BASE_URL;
@@ -31,6 +33,7 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
   const { data: movieDetails } = useMovieDetails(movie.id);
   const { data: castMembers } = useMovieCast(movie.id);
   const { data: crewMembers } = useMovieCrew(movie.id);
+  const { data: movieTrailers } = useMovieTrailers(movie.id);
 
   useEffect(() => {
     if (isOpen) {
@@ -96,7 +99,10 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
                     member.job === "Screenplay"
                 )
                 .map((crewMember) => (
-                  <CreditInfoCard key={crewMember.credit_id} credit={crewMember} />
+                  <CreditInfoCard
+                    key={crewMember.credit_id}
+                    credit={crewMember}
+                  />
                 ))}
             </div>
             <div className="cast-container">
@@ -107,11 +113,17 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
           </div>
         </div>
       </div>
-      {/* <div className="trailers-container">
-        <h2>Trailers</h2>
-        <div className="trailers"></div>
-      </div>
-      <div className="reviews-container">
+      {movieTrailers && (
+        <div className="trailers-container">
+          <h2>Trailers</h2>
+          <div className="trailers">
+            {movieTrailers.slice(0, 4).map((trailer) => (
+              <YoutubeTrailer key={trailer.id} trailer={trailer} />
+            ))}
+          </div>
+        </div>
+      )}
+      {/* <div className="reviews-container">
         <h2>Reviews</h2>
         <div className="reviews"></div>
       </div>
