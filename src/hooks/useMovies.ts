@@ -1,20 +1,29 @@
-import { useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import movieService from "../services/movieService";
-import { Movie, MovieQuery } from "../types";
+import { MovieQuery, MoviesResponse } from "../types";
 
 const useMovies = (movieQuery: MovieQuery) => {
-  return useQuery<Movie[], Error>({
+  return useInfiniteQuery<MoviesResponse, Error>({
     queryKey: ["movies", movieQuery],
-    queryFn: async () => {
+    queryFn: async ({ pageParam = 1}) => {
       if (movieQuery.query && movieQuery.query.trim().length > 0) {
         return movieService
-          .searchMovies(movieQuery)
-          .then((response) => response.results);
+          .searchMovies({
+            query: movieQuery.query,
+            page: pageParam,
+          })
       } else {
         return movieService
-          .getNowPlaying(movieQuery)
-          .then((response) => response.results);
+          .getNowPlaying({
+            page: pageParam,
+          })
       }
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.total_pages === allPages.length) {
+        return undefined;
+      }
+      return allPages.length + 1;
     },
   });
 };

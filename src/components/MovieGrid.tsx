@@ -9,10 +9,17 @@ interface Props {
   onMovieSelected: (movie: Movie) => void;
 }
 const MovieGrid = ({ movieQuery, onMovieSelected }: Props) => {
-  const { data: movies, isLoading, error } = useMovies(movieQuery);
+  const {
+    data,
+    error,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useMovies(movieQuery);
   return (
     <>
-      <Loading isLoading={isLoading} />
+      <Loading isLoading={isLoading || isFetchingNextPage} />
       {error && <ErrorMessage error={error.message} />}
       <h2 id="page-title" className="page-title">
         {movieQuery.query && movieQuery.query.trim().length > 0
@@ -20,14 +27,25 @@ const MovieGrid = ({ movieQuery, onMovieSelected }: Props) => {
           : "In Theaters"}
       </h2>
       <div className="results">
-        {movies?.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            onClick={() => onMovieSelected(movie)}
-            movie={movie}
-          />
-        ))}
+        {data?.pages.map((page) =>
+          page.results.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              onClick={() => onMovieSelected(movie)}
+              movie={movie}
+            />
+          ))
+        )}
       </div>
+      {hasNextPage && (
+        <button
+          disabled={isFetchingNextPage}
+          onClick={() => fetchNextPage()}
+          className="load-more"
+        >
+          {isFetchingNextPage ? "Loading" : "Show more"}
+        </button>
+      )}
     </>
   );
 };
