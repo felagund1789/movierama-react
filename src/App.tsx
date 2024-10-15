@@ -13,6 +13,9 @@ function App() {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
+  const toggleScrollBar = (show: boolean) =>
+    (document.body.style.overflow = show ? "auto" : "hidden");
+
   return (
     <>
       <header className="header">
@@ -28,13 +31,17 @@ function App() {
           <MovieDetailsDialog
             movie={selectedMovie}
             isOpen={openDialog}
-            closeDialog={() => setOpenDialog(false)}
+            closeDialog={() => {
+              toggleScrollBar(true);
+              setOpenDialog(false);
+            }}
             onMovieSelected={(movie) => setSelectedMovie(movie)}
           />
         )}
         <MovieGrid
           movieQuery={movieQuery}
           onMovieSelected={(movie) => {
+            toggleScrollBar(false);
             setSelectedMovie(movie);
             setOpenDialog(true);
           }}
