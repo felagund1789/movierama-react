@@ -43,7 +43,7 @@ const MovieCard = ({ movie, onClick }: Props) => {
           <VoteAverage average={movie.vote_average} />
         </div>
         <div className="movie-genres">
-          {movie.genre_ids.map((genreId) => (
+          {movie.genre_ids?.map((genreId) => (
             <GenreTag key={genreId}>{getGenreName(genreId)}</GenreTag>
           ))}
         </div>

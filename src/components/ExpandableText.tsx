@@ -17,7 +17,12 @@ const ExpandableText = ({ children, maxCharacters = 300 }: Props) => {
     <p>
       {text}
       {children.length > maxCharacters && (
-        <button onClick={() => setExpanded(!expanded)}>{buttonText}</button>
+        <button
+          style={{ padding: "1px 4px", cursor: "pointer" }}
+          onClick={() => setExpanded(!expanded)}
+        >
+          {buttonText}
+        </button>
       )}
     </p>
   );

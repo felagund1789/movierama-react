@@ -17,7 +17,7 @@ const getColor = (average: number) => {
 const VoteAverage = ({ average }: Props) => {
   return (
     <h3 className={`movie-vote-average ${getColor(average)}`}>
-      {average.toFixed(1)}
+      {average ? average.toFixed(1) : "0.0"}
     </h3>
   );
 };
