@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import useGenres from "../../hooks/useGenres";
+import useMovieDetails from "../../hooks/useMovieDetails";
 import { Movie } from "../../types";
 import GenreTag from "../genreTag/GenreTag";
 import ImdbTag from "../ImdbTag";
@@ -15,10 +15,17 @@ interface Props {
   closeDialog: () => void;
 }
 
+const convertRuntimeToHoursAndMinutes = (minutes?: number): string => {
+  if (!minutes) return "";
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  return `${hours}h ${remainingMinutes}m`;
+};
+
 const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
-  const { data: genres } = useGenres();
-  const imdbId = "";
+  const { data: movieDetails } = useMovieDetails(movie.id);
 
   useEffect(() => {
     if (isOpen) {
@@ -59,20 +66,20 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
             <div className="year-and-score">
               <h3 className="movie-year">
                 {movie.release_date?.split("-")[0]}
-              </h3>{" "}
-              •{/* <h3 className="duration"></h3> •  */}
-              <ImdbTag imdbId={imdbId} /> •
+              </h3>
+              •
+              <h3 className="duration">
+                {convertRuntimeToHoursAndMinutes(movieDetails?.runtime)}
+              </h3>
+              •
+              <ImdbTag imdbId={movieDetails?.imdb_id} />
+              •
               <VoteAverage average={movie.vote_average} />
             </div>
             <div className="movie-genres">
-              {movie.genre_ids.map((genreId) => {
-                const genre = genres?.find((genre) => genre.id === genreId);
-                return genre ? (
-                  <GenreTag key={genreId}>{genre.name}</GenreTag>
-                ) : (
-                  ""
-                );
-              })}
+              {movieDetails?.genres.map((genre) => (
+                <GenreTag key={genre.id}>{genre.name}</GenreTag>
+              ))}
             </div>
             <div className="movie-overview">{movie.overview}</div>
             {/* <div className="crew-container"></div>

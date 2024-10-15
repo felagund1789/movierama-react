@@ -1,8 +1,12 @@
-import { MovieQuery, MoviesResponse } from "../types";
+import { MovieDetails, MovieQuery, MoviesResponse } from "../types";
 import apiClient from "./apiClient";
 
 class MovieService {
 
+  getMovieDetails = async (movieId: number): Promise<MovieDetails> => {
+    return apiClient.fetch<MovieDetails>(`/movie/${movieId}`);
+  }
+  
   getNowPlaying = async ({ page }: { page: number }): Promise<MoviesResponse> => {
     return apiClient.fetch<MoviesResponse>("/movie/now_playing", { params: { page } });
   }

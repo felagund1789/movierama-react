@@ -31,6 +31,21 @@ export interface MoviesResponse {
   total_results: number;
 }
 
+export interface MovieDetails extends Movie {
+  belongs_to_collection: object;
+  budget: number;
+  genres: Genre[];
+  homepage: string;
+  imdb_id: string;
+  production_companies: object[];
+  production_countries: object[];
+  revenue: number;
+  runtime: number;
+  spoken_languages: object[];
+  status: string;
+  tagline: string;
+}
+
 export interface MovieQuery {
   page: number;
   query: string;

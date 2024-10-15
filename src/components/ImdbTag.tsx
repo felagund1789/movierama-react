@@ -1,10 +1,14 @@
 const imdbBaseURL = import.meta.env.VITE_IMDB_BASE_URL;
 
 interface Props {
-  imdbId: string;
+  imdbId?: string;
 }
 
 const ImdbTag = ({ imdbId }: Props) => {
+  if (!imdbId) {
+    return null;
+  }
+
   return (
     <a
       style={{ boxSizing: "border-box", paddingTop: "5px" }}
