@@ -93,8 +93,7 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
                   (member) =>
                     member.job === "Director" ||
                     member.job === "Writer" ||
-                    member.job === "Screenplay" ||
-                    member.job === "Producer"
+                    member.job === "Screenplay"
                 )
                 .map((crewMember) => (
                   <CreditInfoCard key={crewMember.credit_id} credit={crewMember} />
