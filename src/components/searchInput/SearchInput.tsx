@@ -1,9 +1,17 @@
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import "./SearchInput.css";
 
 interface Props {
   onSearch: (searchTerm: string) => void;
 }
+
+const handleKeyPress = (event: KeyboardEvent) => {
+  const input = document.querySelector<HTMLInputElement>("input.search");
+  if (event.key === "/" && document.activeElement !== input) {
+    event.preventDefault();
+    input?.focus();
+  }
+};
 
 const SearchInput = ({ onSearch }: Props) => {
   const seacrchInputId = useId();
@@ -16,6 +24,14 @@ const SearchInput = ({ onSearch }: Props) => {
       onSearch(searchTerm);
     }, 300);
   };
+
+  useEffect(() => {
+    document.onkeydown = handleKeyPress;
+    return () => {
+      //cleanup keydown listener
+      document.onkeydown = null;
+    };
+  }, []);
 
   return (
     <div className="search-container">
@@ -33,7 +49,7 @@ const SearchInput = ({ onSearch }: Props) => {
         type="text"
         className="search"
         id={seacrchInputId}
-        placeholder="Search for movies"
+        placeholder="Press / to search for movies"
         onInput={(event) => {
           debounceSearch(event.currentTarget.value ?? "");
         }}
