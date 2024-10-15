@@ -1,10 +1,13 @@
 import { useEffect, useRef } from "react";
+import useMovieCast from "../../hooks/useMovieCast";
+import useMovieCrew from "../../hooks/useMovieCrew";
 import useMovieDetails from "../../hooks/useMovieDetails";
 import { Movie } from "../../types";
 import GenreTag from "../genreTag/GenreTag";
 import ImdbTag from "../ImdbTag";
 import VoteAverage from "../voteAverage/VoteAverage";
 import "./MovieDetailsDialog.css";
+import CreditInfoCard from "../creditInfoCard/CreditInfoCard";
 
 const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 const imageFullBaseURL = import.meta.env.VITE_TMDB_IMAGE_FULL_BASE_URL;
@@ -26,6 +29,8 @@ const convertRuntimeToHoursAndMinutes = (minutes?: number): string => {
 const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
   const { data: movieDetails } = useMovieDetails(movie.id);
+  const { data: castMembers } = useMovieCast(movie.id);
+  const { data: crewMembers } = useMovieCrew(movie.id);
 
   useEffect(() => {
     if (isOpen) {
@@ -82,8 +87,24 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
               ))}
             </div>
             <div className="movie-overview">{movie.overview}</div>
-            {/* <div className="crew-container"></div>
-            <div className="cast-container"></div> */}
+            <div className="crew-container">
+              {crewMembers
+                ?.filter(
+                  (member) =>
+                    member.job === "Director" ||
+                    member.job === "Writer" ||
+                    member.job === "Screenplay" ||
+                    member.job === "Producer"
+                )
+                .map((crewMember) => (
+                  <CreditInfoCard key={crewMember.credit_id} credit={crewMember} />
+                ))}
+            </div>
+            <div className="cast-container">
+              {castMembers?.slice(0, 8).map((actor) => (
+                <CreditInfoCard key={actor.credit_id} credit={actor} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
