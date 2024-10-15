@@ -116,7 +116,7 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
           </div>
         </div>
       </div>
-      {movieTrailers && (
+      {movieTrailers && movieTrailers.length > 0 && (
         <div className="trailers-container">
           <h2>Trailers</h2>
           <div className="trailers">
@@ -126,7 +126,7 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
           </div>
         </div>
       )}
-      {movieReviews && (
+      {movieReviews && movieReviews.length > 0 && (
         <div className="reviews-container">
           <h2>Reviews</h2>
           <div className="reviews">
