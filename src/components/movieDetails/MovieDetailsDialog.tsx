@@ -10,6 +10,8 @@ import ImdbTag from "../ImdbTag";
 import VoteAverage from "../voteAverage/VoteAverage";
 import "./MovieDetailsDialog.css";
 import YoutubeTrailer from "../youtubeTrailer/YoutubeTrailer";
+import useMovieReviews from "../../hooks/useMovieReviews";
+import ReviewCard from "../reviewCard/ReviewCard";
 
 const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 const imageFullBaseURL = import.meta.env.VITE_TMDB_IMAGE_FULL_BASE_URL;
@@ -34,6 +36,7 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
   const { data: castMembers } = useMovieCast(movie.id);
   const { data: crewMembers } = useMovieCrew(movie.id);
   const { data: movieTrailers } = useMovieTrailers(movie.id);
+  const { data: movieReviews } = useMovieReviews(movie.id);
 
   useEffect(() => {
     if (isOpen) {
@@ -123,11 +126,17 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
           </div>
         </div>
       )}
-      {/* <div className="reviews-container">
-        <h2>Reviews</h2>
-        <div className="reviews"></div>
-      </div>
-      <div className="similar-movies-container">
+      {movieReviews && (
+        <div className="reviews-container">
+          <h2>Reviews</h2>
+          <div className="reviews">
+            {movieReviews.slice(0, 2).map((review) => (
+              <ReviewCard key={review.id} review={review} />
+            ))}
+          </div>
+        </div>
+      )}
+      {/* <div className="similar-movies-container">
         <h2>Similar movies</h2>
         <div className="movies"></div>
       </div> */}
