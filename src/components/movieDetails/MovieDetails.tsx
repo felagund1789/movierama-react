@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import useGenres from "../../hooks/useGenres";
 import { Movie } from "../../types";
 import GenreTag from "../genreTag/GenreTag";
+import ImdbTag from "../ImdbTag";
 import VoteAverage from "../voteAverage/VoteAverage";
 import "./MovieDetails.css";
 
@@ -17,6 +18,7 @@ interface Props {
 const MovieDetails = ({ movie, isOpen, closeDialog }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
   const { data: genres } = useGenres();
+  const imdbId = "";
 
   useEffect(() => {
     if (isOpen) {
@@ -30,7 +32,9 @@ const MovieDetails = ({ movie, isOpen, closeDialog }: Props) => {
     <dialog ref={ref} onCancel={closeDialog} className="movie-details-dialog">
       <div
         className="details"
-        style={{ backgroundImage: `url(${imageFullBaseURL}${movie.backdrop_path})` }}
+        style={{
+          backgroundImage: `url(${imageFullBaseURL}${movie.backdrop_path})`,
+        }}
       >
         <button className="close-button" onClick={closeDialog}>
           <svg
@@ -57,7 +61,7 @@ const MovieDetails = ({ movie, isOpen, closeDialog }: Props) => {
                 {movie.release_date?.split("-")[0]}
               </h3>{" "}
               •{/* <h3 className="duration"></h3> •  */}
-              {/* <ImdbTag /> •  */}
+              <ImdbTag imdbId={imdbId} /> •
               <VoteAverage average={movie.vote_average} />
             </div>
             <div className="movie-genres">
