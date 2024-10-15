@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useId, useRef } from "react";
 import "./SearchInput.css";
 
 interface Props {
@@ -7,18 +7,14 @@ interface Props {
 
 const SearchInput = ({ onSearch }: Props) => {
   const seacrchInputId = useId();
-  const [timer, setTimer] = useState<number | null>(null);
+  const timerRef = useRef(0);
 
   const debounceSearch = (searchTerm: string) => {
-    if (timer) {
-      clearTimeout(timer);
-    }
+    clearTimeout(timerRef.current);
 
-    setTimer(
-      setTimeout(() => {
-        onSearch(searchTerm);
-      }, 300)
-    );
+    timerRef.current = setTimeout(() => {
+      onSearch(searchTerm);
+    }, 300);
   };
 
   return (
