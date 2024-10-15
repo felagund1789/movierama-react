@@ -2,16 +2,18 @@ import { useEffect, useRef } from "react";
 import useMovieCast from "../../hooks/useMovieCast";
 import useMovieCrew from "../../hooks/useMovieCrew";
 import useMovieDetails from "../../hooks/useMovieDetails";
+import useMovieReviews from "../../hooks/useMovieReviews";
 import useMovieTrailers from "../../hooks/useMovieTrailers";
+import useSimilarMovies from "../../hooks/useSimilarMovies";
 import { Movie } from "../../types";
 import CreditInfoCard from "../creditInfoCard/CreditInfoCard";
 import GenreTag from "../genreTag/GenreTag";
 import ImdbTag from "../ImdbTag";
-import VoteAverage from "../voteAverage/VoteAverage";
-import "./MovieDetailsDialog.css";
-import YoutubeTrailer from "../youtubeTrailer/YoutubeTrailer";
-import useMovieReviews from "../../hooks/useMovieReviews";
+import MovieCard from "../movieCard/MovieCard";
 import ReviewCard from "../reviewCard/ReviewCard";
+import VoteAverage from "../voteAverage/VoteAverage";
+import YoutubeTrailer from "../youtubeTrailer/YoutubeTrailer";
+import "./MovieDetailsDialog.css";
 
 const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 const imageFullBaseURL = import.meta.env.VITE_TMDB_IMAGE_FULL_BASE_URL;
@@ -20,6 +22,7 @@ interface Props {
   movie: Movie;
   isOpen: boolean;
   closeDialog: () => void;
+  onMovieSelected: (movie: Movie) => void;
 }
 
 const convertRuntimeToHoursAndMinutes = (minutes?: number): string => {
@@ -30,13 +33,19 @@ const convertRuntimeToHoursAndMinutes = (minutes?: number): string => {
   return `${hours}h ${remainingMinutes}m`;
 };
 
-const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
+const MovieDetailsDialog = ({
+  movie,
+  isOpen,
+  closeDialog,
+  onMovieSelected,
+}: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
   const { data: movieDetails } = useMovieDetails(movie.id);
   const { data: castMembers } = useMovieCast(movie.id);
   const { data: crewMembers } = useMovieCrew(movie.id);
   const { data: movieTrailers } = useMovieTrailers(movie.id);
   const { data: movieReviews } = useMovieReviews(movie.id);
+  const { data: similarMovies } = useSimilarMovies(movie.id);
 
   useEffect(() => {
     if (isOpen) {
@@ -136,10 +145,16 @@ const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
           </div>
         </div>
       )}
-      {/* <div className="similar-movies-container">
-        <h2>Similar movies</h2>
-        <div className="movies"></div>
-      </div> */}
+      {similarMovies && similarMovies.length > 0 && (
+        <div className="similar-movies-container">
+          <h2>Similar movies</h2>
+          <div className="movies">
+            {similarMovies.slice(0, 4).map((movie) => (
+              <MovieCard onClick={() => onMovieSelected(movie)} key={movie.id} movie={movie} />
+            ))}
+          </div>
+        </div>
+      )}
     </dialog>
   );
 };

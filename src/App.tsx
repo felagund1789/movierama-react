@@ -29,6 +29,7 @@ function App() {
             movie={selectedMovie}
             isOpen={openDialog}
             closeDialog={() => setOpenDialog(false)}
+            onMovieSelected={(movie) => setSelectedMovie(movie)}
           />
         )}
         <MovieGrid
