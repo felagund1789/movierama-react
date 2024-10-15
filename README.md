@@ -1,6 +1,7 @@
 # Movierama (React)
 
 ![React](https://img.shields.io/badge/-React-000000?style=flat-square&logo=React&logoColor=61DAFB)
+![React Query](https://img.shields.io/badge/React_Query-%23FF4154.svg?style=flat-square&logo=react-query&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white)
 ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
@@ -10,6 +11,7 @@
 
 - [Overview](#overview)
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Responsive Design](#responsive-design)
 - [Accessibility](#accessibility)
 - [Installation](#installation)
@@ -31,6 +33,19 @@ Movierama is a movie catalog app that allows users to browse through a wide rang
 - **Infinite Scrolling**: Just scroll down and the movies keep coming.
 - **Responsive Design**: The app is designed to work seamlessly across various devices and screen sizes.
 - **Accessibility**: The app uses `rem` units for better accessibility and scalability.
+
+## Screenshots
+
+![Movie search](screens/landscape-movie-search.png)
+
+![Movie details](screens/landscape-movie-details.png)
+
+![Movie trailers, reviews and similar movies](screens/landscape-movie-trailers.png)
+
+![Narrow view](screens/narrow-movie-details.png)
+
+| ![Mobile movie details](screens/portrait-movie-details.png) | ![Mobile movie trailers](screens/portrait-movie-credits.png) | ![Mobile movie trailers](screens/portrait-movie-trailers.png) | ![Mobile movie reviews](screens/portrait-movie-reviews.png) |
+|-------------------------------------------------------------|---------------------------------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------|
 
 ## Responsive Design
 
