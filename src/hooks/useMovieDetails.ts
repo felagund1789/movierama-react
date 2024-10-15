@@ -8,6 +8,7 @@ const useMovieDetails = (movieId: number) => {
     queryFn: async () => {
       return movieService.getMovieDetails(movieId);
     },
+    staleTime: 10 * 60 * 1000, // 10 minutes
   });
 };
 
