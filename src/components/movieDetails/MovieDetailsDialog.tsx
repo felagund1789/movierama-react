@@ -1,5 +1,5 @@
 import posterPlaceholder from "../../assets/poster-placeholder-dark.png";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useMovieCast from "../../hooks/useMovieCast";
 import useMovieCrew from "../../hooks/useMovieCrew";
 import useMovieDetails from "../../hooks/useMovieDetails";
@@ -48,11 +48,18 @@ const MovieDetailsDialog = ({
   const { data: movieReviews } = useMovieReviews(movie.id);
   const { data: similarMovies } = useSimilarMovies(movie.id);
 
+  const [isClosing, setIsClosing] = useState(false);
+
   useEffect(() => {
     if (isOpen) {
       ref.current?.showModal();
+      setIsClosing(false);
     } else {
-      ref.current?.close();
+      setIsClosing(true);
+      setTimeout(() => {
+        ref.current?.close();
+        setIsClosing(false);
+      }, 300);
     }
   }, [isOpen]);
 
@@ -130,7 +137,7 @@ const MovieDetailsDialog = ({
           </div>
         </div>
       </div>
-      {movieTrailers && movieTrailers.length > 0 && (
+      {!isClosing && movieTrailers && movieTrailers.length > 0 && (
         <div className="trailers-container">
           <h2>Trailers</h2>
           <div className="trailers">
