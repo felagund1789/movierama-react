@@ -4,7 +4,7 @@ import { Movie } from "../../types";
 import GenreTag from "../genreTag/GenreTag";
 import ImdbTag from "../ImdbTag";
 import VoteAverage from "../voteAverage/VoteAverage";
-import "./MovieDetails.css";
+import "./MovieDetailsDialog.css";
 
 const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 const imageFullBaseURL = import.meta.env.VITE_TMDB_IMAGE_FULL_BASE_URL;
@@ -15,7 +15,7 @@ interface Props {
   closeDialog: () => void;
 }
 
-const MovieDetails = ({ movie, isOpen, closeDialog }: Props) => {
+const MovieDetailsDialog = ({ movie, isOpen, closeDialog }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
   const { data: genres } = useGenres();
   const imdbId = "";
@@ -96,4 +96,4 @@ const MovieDetails = ({ movie, isOpen, closeDialog }: Props) => {
   );
 };
 
-export default MovieDetails;
+export default MovieDetailsDialog;

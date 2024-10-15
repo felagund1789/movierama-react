@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import MovieDetails from "./components/movieDetails/MovieDetails";
+import MovieDetailsDialog from "./components/movieDetails/MovieDetailsDialog";
 import MovieGrid from "./components/MovieGrid";
 import SearchInput from "./components/searchInput/SearchInput";
 import { Movie, MovieQuery } from "./types";
@@ -25,7 +25,7 @@ function App() {
       </header>
       <main className="content">
         {selectedMovie && (
-          <MovieDetails
+          <MovieDetailsDialog
             movie={selectedMovie}
             isOpen={openDialog}
             closeDialog={() => setOpenDialog(false)}
