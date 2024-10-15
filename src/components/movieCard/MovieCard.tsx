@@ -1,3 +1,4 @@
+import posterPlaceholder from "../../assets/poster-placeholder-dark.png";
 import useGenres from "../../hooks/useGenres";
 import { Movie } from "../../types";
 import ExpandableText from "../ExpandableText";
@@ -20,10 +21,14 @@ const MovieCard = ({ movie, onClick }: Props) => {
   };
 
   return (
-    <div className="card" >
+    <div className="card">
       <div onClick={onClick}>
         <img
-          src={`${imageBaseURL}${movie.poster_path}`}
+          src={
+            movie.poster_path && movie.poster_path.trim().length > 0
+              ? `${imageBaseURL}${movie.poster_path}`
+              : posterPlaceholder
+          }
           alt={movie.title}
           title={movie.title}
           className="movie-poster"

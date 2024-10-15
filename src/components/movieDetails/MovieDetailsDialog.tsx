@@ -1,3 +1,4 @@
+import posterPlaceholder from "../../assets/poster-placeholder-dark.png";
 import { useEffect, useRef } from "react";
 import useMovieCast from "../../hooks/useMovieCast";
 import useMovieCrew from "../../hooks/useMovieCrew";
@@ -76,7 +77,11 @@ const MovieDetailsDialog = ({
         </button>
         <div className="details-content">
           <img
-            src={`${imageBaseURL}${movie.poster_path}`}
+            src={
+              movie.poster_path && movie.poster_path.trim().length > 0
+                ? `${imageBaseURL}${movie.poster_path}`
+                : posterPlaceholder
+            }
             alt={movie.title}
             title={movie.title}
             className="movie-poster"
@@ -150,7 +155,11 @@ const MovieDetailsDialog = ({
           <h2>Similar movies</h2>
           <div className="movies">
             {similarMovies.slice(0, 4).map((movie) => (
-              <MovieCard onClick={() => onMovieSelected(movie)} key={movie.id} movie={movie} />
+              <MovieCard
+                onClick={() => onMovieSelected(movie)}
+                key={movie.id}
+                movie={movie}
+              />
             ))}
           </div>
         </div>
