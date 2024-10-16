@@ -15,6 +15,7 @@
 - [Responsive Design](#responsive-design)
 - [Accessibility](#accessibility)
 - [Installation](#installation)
+- [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -33,6 +34,7 @@ Movierama is a movie catalog app that allows users to browse through a wide rang
 - **Infinite Scrolling**: Just scroll down and the movies keep coming.
 - **Responsive Design**: The app is designed to work seamlessly across various devices and screen sizes.
 - **Accessibility**: The app uses `rem` units for better accessibility and scalability.
+- **Dark Mode**: Automatically switches between light and dark themes based on the user's system preferences.
 
 ## Screenshots
 
@@ -65,6 +67,20 @@ To get started with Movierama, follow these steps:
 4. Copy `.env.example` to `.env` and replace the value of `VITE_TMDB_API_KEY=YOUR_API_KEY` with your own key
 5. Run `npm run dev` to start the web server.
 6. Open your browser and visit `http://localhost:5173` to access Movierama.
+
+## Testing
+
+To run the tests, use the following command:
+
+```bash
+npm run test
+```
+
+To run the tests in UI mode, use the following command:
+
+```bash
+npm run test:ui
+```
 
 ## Contributing
 
