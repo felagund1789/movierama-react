@@ -8,7 +8,6 @@ interface Props {
 }
 
 const ReviewCard = ({ review }: Props) => {
-  console.log(review.content);
   return (
     <div className="review-card">
       <div className="author">
@@ -27,9 +26,9 @@ const ReviewCard = ({ review }: Props) => {
       </div>
       <div className="review">
         <div className="review-score">
-          {[0, 1, 2, 3, 4].map((index) => (
-            <span key={index} className="star">
-              {review.author_details.rating >= index * 2 + 2 ? (
+          {[0, 1, 2, 3, 4].map((index) =>
+            review.author_details.rating >= index * 2 + 2 ? (
+              <span key={index} className="full-star" aria-label="full-star">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
@@ -39,7 +38,9 @@ const ReviewCard = ({ review }: Props) => {
                 >
                   <path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z" />
                 </svg>
-              ) : review.author_details.rating >= index * 2 + 1 ? (
+              </span>
+            ) : review.author_details.rating >= index * 2 + 1 ? (
+              <span key={index} className="half-star" aria-label="half-star">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
@@ -49,7 +50,9 @@ const ReviewCard = ({ review }: Props) => {
                 >
                   <path d="m606-286-33-144 111-96-146-13-58-136v312l126 77ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z" />
                 </svg>
-              ) : (
+              </span>
+            ) : (
+              <span key={index} className="empty-star" aria-label="empty-star">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"
@@ -59,9 +62,9 @@ const ReviewCard = ({ review }: Props) => {
                 >
                   <path d="m354-287 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-120l65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-350Z" />
                 </svg>
-              )}
-            </span>
-          ))}
+              </span>
+            )
+          )}
         </div>
         <div className="review-content">
           <a href={review.url} target="_blank">
@@ -69,8 +72,8 @@ const ReviewCard = ({ review }: Props) => {
           </a>
           {review.content
             .split("\n")
-            .map((text) =>
-              text && text.trim().length > 0 ? <p>{text}</p> : <br />
+            .map((text, i) =>
+              text && text.trim().length > 0 ? <p key={i}>{text}</p> : <br key={i} />
             )}
         </div>
       </div>
