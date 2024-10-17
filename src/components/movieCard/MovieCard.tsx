@@ -2,7 +2,7 @@ import posterPlaceholder from "../../assets/poster-placeholder-dark.png";
 import useGenres from "../../hooks/useGenres";
 import { Movie } from "../../types";
 import ExpandableText from "../ExpandableText";
-import GenreTag from "../genreTag/GenreTag";
+import GenreTag from "../GenreTag";
 import VoteAverage from "../voteAverage/VoteAverage";
 import "./MovieCard.css";
 

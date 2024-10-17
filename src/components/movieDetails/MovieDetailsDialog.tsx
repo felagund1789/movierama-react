@@ -1,5 +1,5 @@
-import posterPlaceholder from "../../assets/poster-placeholder-dark.png";
 import { useEffect, useRef, useState } from "react";
+import posterPlaceholder from "../../assets/poster-placeholder-dark.png";
 import useMovieCast from "../../hooks/useMovieCast";
 import useMovieCrew from "../../hooks/useMovieCrew";
 import useMovieDetails from "../../hooks/useMovieDetails";
@@ -8,7 +8,7 @@ import useMovieTrailers from "../../hooks/useMovieTrailers";
 import useSimilarMovies from "../../hooks/useSimilarMovies";
 import { Movie } from "../../types";
 import CreditInfoCard from "../creditInfoCard/CreditInfoCard";
-import GenreTag from "../genreTag/GenreTag";
+import GenreTag from "../GenreTag";
 import ImdbTag from "../ImdbTag";
 import MovieCard from "../movieCard/MovieCard";
 import ReviewCard from "../reviewCard/ReviewCard";
