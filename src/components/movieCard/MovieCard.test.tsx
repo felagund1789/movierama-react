@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen, fireEvent } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, Mock, vi } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
 import useGenres from "../../hooks/useGenres";
 import { Movie } from "../../types";
 import MovieCard from "./MovieCard";
@@ -36,8 +36,6 @@ describe("MovieCard", () => {
   beforeEach(() => {
     (useGenres as Mock).mockReturnValue({ data: mockGenres });
   });
-
-  afterEach(() => cleanup());
 
   it("should render correctly", () => {
     render(<MovieCard movie={mockMovie} onClick={() => {}} />);
