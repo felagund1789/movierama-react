@@ -77,12 +77,14 @@ To run the tests, use the following command:
 ```bash
 npm run test
 ```
+![vitest](screens/vitest.png)
 
 To run the tests in UI mode, use the following command:
 
 ```bash
 npm run test:ui
 ```
+![vitest --ui](screens/vitest--ui.png)
 
 ## Contributing
 
