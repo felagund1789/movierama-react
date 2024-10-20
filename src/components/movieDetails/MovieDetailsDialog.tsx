@@ -20,7 +20,7 @@ const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 const imageFullBaseURL = import.meta.env.VITE_TMDB_IMAGE_FULL_BASE_URL;
 
 interface Props {
-  movie: Movie;
+  movieId: number;
   isOpen: boolean;
   closeDialog: () => void;
   onMovieSelected: (movie: Movie) => void;
@@ -35,18 +35,18 @@ const convertRuntimeToHoursAndMinutes = (minutes?: number): string => {
 };
 
 const MovieDetailsDialog = ({
-  movie,
+  movieId,
   isOpen,
   closeDialog,
   onMovieSelected,
 }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
-  const { data: movieDetails } = useMovieDetails(movie.id);
-  const { data: castMembers } = useMovieCast(movie.id);
-  const { data: crewMembers } = useMovieCrew(movie.id);
-  const { data: movieTrailers } = useMovieTrailers(movie.id);
-  const { data: movieReviews } = useMovieReviews(movie.id);
-  const { data: similarMovies } = useSimilarMovies(movie.id);
+  const { data: movieDetails } = useMovieDetails(movieId);
+  const { data: castMembers } = useMovieCast(movieId);
+  const { data: crewMembers } = useMovieCrew(movieId);
+  const { data: movieTrailers } = useMovieTrailers(movieId);
+  const { data: movieReviews } = useMovieReviews(movieId);
+  const { data: similarMovies } = useSimilarMovies(movieId);
 
   const [isClosing, setIsClosing] = useState(false);
 
@@ -68,7 +68,7 @@ const MovieDetailsDialog = ({
       <div
         className="details"
         style={{
-          backgroundImage: `url(${imageFullBaseURL}${movie.backdrop_path})`,
+          backgroundImage: `url(${imageFullBaseURL}${movieDetails?.backdrop_path})`,
         }}
       >
         <button className="close-button" onClick={closeDialog}>
@@ -85,19 +85,19 @@ const MovieDetailsDialog = ({
         <div className="details-content">
           <img
             src={
-              movie.poster_path && movie.poster_path.trim().length > 0
-                ? `${imageBaseURL}${movie.poster_path}`
+              movieDetails?.poster_path && movieDetails?.poster_path.trim().length > 0
+                ? `${imageBaseURL}${movieDetails?.poster_path}`
                 : posterPlaceholder
             }
-            alt={movie.title}
-            title={movie.title}
+            alt={movieDetails?.title}
+            title={movieDetails?.title}
             className="movie-poster"
           />
           <div className="details-text">
-            <h2 className="movie-title">{movie.title}</h2>
+            <h2 className="movie-title">{movieDetails?.title}</h2>
             <div className="year-and-score">
               <h3 className="movie-year">
-                {movie.release_date?.split("-")[0]}
+                {movieDetails?.release_date?.split("-")[0]}
               </h3>
               •
               <h3 className="duration">
@@ -106,14 +106,14 @@ const MovieDetailsDialog = ({
               •
               <ImdbTag imdbId={movieDetails?.imdb_id} />
               •
-              <VoteAverage average={movie.vote_average} />
+              <VoteAverage average={movieDetails?.vote_average ?? 0} />
             </div>
             <div className="movie-genres">
               {movieDetails?.genres.map((genre) => (
                 <GenreTag key={genre.id}>{genre.name}</GenreTag>
               ))}
             </div>
-            <div className="movie-overview">{movie.overview}</div>
+            <div className="movie-overview">{movieDetails?.overview}</div>
             <div className="crew-container">
               {crewMembers
                 ?.filter(
