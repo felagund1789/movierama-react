@@ -41,7 +41,7 @@ const MovieDetailsDialog = ({
   onMovieSelected,
 }: Props) => {
   const ref = useRef<HTMLDialogElement>(null);
-  const { data: movieDetails } = useMovieDetails(movieId);
+  const { data: movieDetails, isLoading: movieDetailsLoading } = useMovieDetails(movieId);
   const { data: castMembers } = useMovieCast(movieId);
   const { data: crewMembers } = useMovieCrew(movieId);
   const { data: movieTrailers } = useMovieTrailers(movieId);
@@ -85,23 +85,23 @@ const MovieDetailsDialog = ({
         <div className="details-content">
           <img
             src={
-              movieDetails?.poster_path && movieDetails?.poster_path.trim().length > 0
-                ? `${imageBaseURL}${movieDetails?.poster_path}`
-                : posterPlaceholder
+              movieDetailsLoading || !movieDetails?.poster_path || movieDetails?.poster_path.trim().length === 0
+                ? posterPlaceholder
+                : `${imageBaseURL}${movieDetails?.poster_path}`
             }
             alt={movieDetails?.title}
             title={movieDetails?.title}
             className="movie-poster"
           />
           <div className="details-text">
-            <h2 className="movie-title">{movieDetails?.title}</h2>
+            <h2 className="movie-title">{movieDetails?.title ?? ""}</h2>
             <div className="year-and-score">
               <h3 className="movie-year">
                 {movieDetails?.release_date?.split("-")[0]}
               </h3>
               •
               <h3 className="duration">
-                {convertRuntimeToHoursAndMinutes(movieDetails?.runtime)}
+                {convertRuntimeToHoursAndMinutes(movieDetails?.runtime ?? 0)}
               </h3>
               •
               <ImdbTag imdbId={movieDetails?.imdb_id} />
@@ -113,7 +113,7 @@ const MovieDetailsDialog = ({
                 <GenreTag key={genre.id}>{genre.name}</GenreTag>
               ))}
             </div>
-            <div className="movie-overview">{movieDetails?.overview}</div>
+            <div className="movie-overview">{movieDetails?.overview ?? ""}</div>
             <div className="crew-container">
               {crewMembers
                 ?.filter(

@@ -24,6 +24,9 @@ function App() {
     if (movieId && !isNaN(Number(movieId))) {
       setSelectedMovie(Number(movieId));
       setOpenDialog(true);
+    } else {
+      setSelectedMovie(null);
+      setOpenDialog(false);
     }
   }, [movieId]);
 

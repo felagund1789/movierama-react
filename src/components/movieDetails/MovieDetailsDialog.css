@@ -83,6 +83,10 @@
   }
 }
 
+.details .details-text {
+  width: 100%;
+}
+
 .details .details-text div,
 .details .details-text h2 {
   box-sizing: border-box;
