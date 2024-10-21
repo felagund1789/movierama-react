@@ -27,6 +27,8 @@
 }
 
 .details .close-button {
+  position: sticky;
+  top: 1rem;
   border: none;
   outline: none;
   cursor: pointer;

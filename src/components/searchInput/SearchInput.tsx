@@ -1,9 +1,6 @@
 import { useEffect, useId, useRef } from "react";
 import "./SearchInput.css";
-
-interface Props {
-  onSearch: (searchTerm: string) => void;
-}
+import useMovieQueryStore from "../../store";
 
 const handleKeyPress = (event: KeyboardEvent) => {
   const input = document.querySelector<HTMLInputElement>("input.search");
@@ -13,15 +10,16 @@ const handleKeyPress = (event: KeyboardEvent) => {
   }
 };
 
-const SearchInput = ({ onSearch }: Props) => {
+const SearchInput = () => {
   const seacrchInputId = useId();
   const timerRef = useRef(0);
+  const setSearchText = useMovieQueryStore((state) => state.setQuery);
 
   const debounceSearch = (searchTerm: string) => {
     clearTimeout(timerRef.current);
 
     timerRef.current = setTimeout(() => {
-      onSearch(searchTerm);
+      setSearchText(searchTerm);
     }, 300);
   };
 

@@ -76,6 +76,18 @@
   }
 }
 
+.header .back-button {
+  height: 3rem;
+  padding: 0 0.35rem;
+  margin-left: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border: none;
+  color: var(--white-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
 .content {
   box-sizing: border-box;
   width: 100%;
