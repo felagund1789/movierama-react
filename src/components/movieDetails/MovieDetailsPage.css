@@ -44,23 +44,28 @@
 }
 
 .details .details-content {
-  max-width: 60rem;
   padding: .5rem 1rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 25rem 1fr 1fr;
   flex-direction: row;
   justify-content: start;
   align-items: start;
   gap: 2rem;
 }
+@media(max-width: 72rem) {
+  .details .details-content {
+    grid-template-columns: 25rem 1fr;
+  }
+}
 @media(max-width: 48rem) {
   .details .details-content {
+    display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 }
 
 .details .movie-poster {
-  height: 100%;
   max-width: min(25rem, 100%);
   object-fit: cover;
 }
@@ -75,6 +80,8 @@
   width: 100%;
 }
 
+.details .credits div,
+.details .credits h2,
 .details .details-text div,
 .details .details-text h2 {
   box-sizing: border-box;
@@ -119,8 +126,8 @@
   background-color: var(--red-color);
 }
 
-.details .details-text .crew-container,
-.details .details-text .cast-container,
+.details .credits .crew-container,
+.details .credits .cast-container,
 .details .details-text .movie-genres {
   margin-top: .5rem;
   display: flex;

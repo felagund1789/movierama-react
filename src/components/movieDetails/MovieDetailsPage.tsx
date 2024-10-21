@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import posterPlaceholder from "../../assets/poster-placeholder-dark.png";
 import useMovieCast from "../../hooks/useMovieCast";
 import useMovieCrew from "../../hooks/useMovieCrew";
@@ -46,17 +46,6 @@ const MovieDetailsPage = () => {
           backgroundImage: `url(${imageFullBaseURL}${movieDetails?.backdrop_path})`,
         }}
       >
-        <Link to="/" className="close-button">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24px"
-            viewBox="0 -960 960 960"
-            width="24px"
-            fill="#e8eaed"
-          >
-            <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-          </svg>
-        </Link>
         <div className="details-content">
           <img
             src={
@@ -89,6 +78,8 @@ const MovieDetailsPage = () => {
               ))}
             </div>
             <div className="movie-overview">{movieDetails?.overview ?? ""}</div>
+          </div>
+          <div className="credits">
             <div className="crew-container">
               {crewMembers
                 ?.filter(
