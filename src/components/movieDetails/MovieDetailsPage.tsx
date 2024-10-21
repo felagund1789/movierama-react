@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import posterPlaceholder from "../../assets/poster-placeholder-dark.png";
 import useMovieCast from "../../hooks/useMovieCast";
 import useMovieCrew from "../../hooks/useMovieCrew";
@@ -6,7 +6,6 @@ import useMovieDetails from "../../hooks/useMovieDetails";
 import useMovieReviews from "../../hooks/useMovieReviews";
 import useMovieTrailers from "../../hooks/useMovieTrailers";
 import useSimilarMovies from "../../hooks/useSimilarMovies";
-import { Movie } from "../../types";
 import CreditInfoCard from "../creditInfoCard/CreditInfoCard";
 import GenreTag from "../GenreTag";
 import ImdbTag from "../ImdbTag";
@@ -14,17 +13,10 @@ import MovieCard from "../movieCard/MovieCard";
 import ReviewCard from "../reviewCard/ReviewCard";
 import VoteAverage from "../voteAverage/VoteAverage";
 import YoutubeTrailer from "../youtubeTrailer/YoutubeTrailer";
-import "./MovieDetailsDialog.css";
+import "./MovieDetailsPage.css";
 
 const imageBaseURL = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 const imageFullBaseURL = import.meta.env.VITE_TMDB_IMAGE_FULL_BASE_URL;
-
-interface Props {
-  movieId: number;
-  isOpen: boolean;
-  closeDialog: () => void;
-  onMovieSelected: (movie: Movie) => void;
-}
 
 const convertRuntimeToHoursAndMinutes = (minutes?: number): string => {
   if (!minutes) return "";
@@ -34,44 +26,27 @@ const convertRuntimeToHoursAndMinutes = (minutes?: number): string => {
   return `${hours}h ${remainingMinutes}m`;
 };
 
-const MovieDetailsDialog = ({
-  movieId,
-  isOpen,
-  closeDialog,
-  onMovieSelected,
-}: Props) => {
-  const ref = useRef<HTMLDialogElement>(null);
-  const { data: movieDetails, isLoading: movieDetailsLoading } = useMovieDetails(movieId);
-  const { data: castMembers } = useMovieCast(movieId);
-  const { data: crewMembers } = useMovieCrew(movieId);
-  const { data: movieTrailers } = useMovieTrailers(movieId);
-  const { data: movieReviews } = useMovieReviews(movieId);
-  const { data: similarMovies } = useSimilarMovies(movieId);
+const MovieDetailsPage = () => {
+  const { movieId } = useParams();
+  const navigate = useNavigate();
+  if (!movieId) throw new Error("Movie not found is required");
 
-  const [isClosing, setIsClosing] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      ref.current?.showModal();
-      setIsClosing(false);
-    } else {
-      setIsClosing(true);
-      setTimeout(() => {
-        ref.current?.close();
-        setIsClosing(false);
-      }, 300);
-    }
-  }, [isOpen]);
+  const { data: movieDetails, isLoading: movieDetailsLoading } = useMovieDetails(Number(movieId));
+  const { data: castMembers } = useMovieCast(Number(movieId));
+  const { data: crewMembers } = useMovieCrew(Number(movieId));
+  const { data: movieTrailers } = useMovieTrailers(Number(movieId));
+  const { data: movieReviews } = useMovieReviews(Number(movieId));
+  const { data: similarMovies } = useSimilarMovies(Number(movieId));
 
   return (
-    <dialog ref={ref} onCancel={closeDialog} className="movie-details-dialog">
+    <div className="movie-details">
       <div
         className="details"
         style={{
           backgroundImage: `url(${imageFullBaseURL}${movieDetails?.backdrop_path})`,
         }}
       >
-        <button className="close-button" onClick={closeDialog}>
+        <Link to="/" className="close-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24px"
@@ -81,7 +56,7 @@ const MovieDetailsDialog = ({
           >
             <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </svg>
-        </button>
+        </Link>
         <div className="details-content">
           <img
             src={
@@ -137,7 +112,7 @@ const MovieDetailsDialog = ({
           </div>
         </div>
       </div>
-      {!isClosing && movieTrailers && movieTrailers.length > 0 && (
+      {movieTrailers && movieTrailers.length > 0 && (
         <div className="trailers-container">
           <h2>Trailers</h2>
           <div className="trailers">
@@ -163,7 +138,7 @@ const MovieDetailsDialog = ({
           <div className="movies">
             {similarMovies.slice(0, 4).map((movie) => (
               <MovieCard
-                onClick={() => onMovieSelected(movie)}
+                onClick={() => navigate(`/movies/${movie.id}`)}
                 key={movie.id}
                 movie={movie}
               />
@@ -171,8 +146,8 @@ const MovieDetailsDialog = ({
           </div>
         </div>
       )}
-    </dialog>
+    </div>
   );
 };
 
-export default MovieDetailsDialog;
+export default MovieDetailsPage;

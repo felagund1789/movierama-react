@@ -1,4 +1,4 @@
-.movie-details-dialog {
+.movie-details {
   --text-color: rgba(255, 255, 255, 0.87);
   position: fixed;
   width: 100vw;
@@ -11,21 +11,7 @@
   outline: none;
   color: var(--text-color);
   box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
-  z-index: 100;
-  transition: display .5s allow-discrete, overlay .5s allow-discrete;
-  animation: close .5s forwards;
-  &[open] {
-    animation: open .5s forwards;
-  }
-}
-@media(min-width:60rem) {
-  .movie-details-dialog {
-    border-radius: 10px;
-    width: min(60rem, 100%);
-    height: max-content;
-    max-height: 90vh;
-    margin: auto;
-  }
+  overflow-y: auto;
 }
 
 .details {
