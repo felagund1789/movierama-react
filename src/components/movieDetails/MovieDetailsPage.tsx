@@ -31,7 +31,7 @@ const MovieDetailsPage = () => {
   const navigate = useNavigate();
   if (!movieId) throw new Error("Movie not found is required");
 
-  const { data: movieDetails, isLoading: movieDetailsLoading } = useMovieDetails(Number(movieId));
+  const { data: movieDetails, isLoading } = useMovieDetails(Number(movieId));
   const { data: castMembers } = useMovieCast(Number(movieId));
   const { data: crewMembers } = useMovieCrew(Number(movieId));
   const { data: movieTrailers } = useMovieTrailers(Number(movieId));
@@ -49,7 +49,9 @@ const MovieDetailsPage = () => {
         <div className="details-content">
           <img
             src={
-              movieDetailsLoading || !movieDetails?.poster_path || movieDetails?.poster_path.trim().length === 0
+              isLoading ||
+              !movieDetails?.poster_path ||
+              movieDetails?.poster_path.trim().length === 0
                 ? posterPlaceholder
                 : `${imageBaseURL}${movieDetails?.poster_path}`
             }
@@ -81,24 +83,30 @@ const MovieDetailsPage = () => {
           </div>
           <div className="credits">
             <div className="crew-container">
-              {crewMembers
-                ?.filter(
-                  (member) =>
-                    member.job === "Director" ||
-                    member.job === "Writer" ||
-                    member.job === "Screenplay"
-                )
-                .map((crewMember) => (
-                  <CreditInfoCard
-                    key={crewMember.credit_id}
-                    credit={crewMember}
-                  />
-                ))}
+              <h2>Crew</h2>
+              <div>
+                {crewMembers
+                  ?.filter(
+                    (member) =>
+                      member.job === "Director" ||
+                      member.job === "Writer" ||
+                      member.job === "Screenplay"
+                  )
+                  .map((crewMember) => (
+                    <CreditInfoCard
+                      key={crewMember.credit_id}
+                      credit={crewMember}
+                    />
+                  ))}
+              </div>
             </div>
             <div className="cast-container">
-              {castMembers?.slice(0, 8).map((actor) => (
-                <CreditInfoCard key={actor.credit_id} credit={actor} />
-              ))}
+              <h2>Cast</h2>
+              <div>
+                {castMembers?.slice(0, 8).map((actor) => (
+                  <CreditInfoCard key={actor.credit_id} credit={actor} />
+                ))}
+              </div>
             </div>
           </div>
         </div>

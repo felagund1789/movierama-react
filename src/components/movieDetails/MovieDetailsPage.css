@@ -2,9 +2,9 @@
   --text-color: rgba(255, 255, 255, 0.87);
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 6rem);
   max-width: 100vw;
-  max-height: 100vh;
+  max-height: calc(100vh - 6rem);
   background-color: var(--card-bg-color);
   border-color: var(--card-bg-color);
   border: none;
@@ -80,8 +80,6 @@
   width: 100%;
 }
 
-.details .credits div,
-.details .credits h2,
 .details .details-text div,
 .details .details-text h2 {
   box-sizing: border-box;
@@ -126,8 +124,23 @@
   background-color: var(--red-color);
 }
 
+.details .credits .crew-container h2,
+.details .credits .cast-container h2 {
+  align-self: center;
+}
+
 .details .credits .crew-container,
-.details .credits .cast-container,
+.details .credits .cast-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, .75);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.details .credits .crew-container div,
+.details .credits .cast-container div,
 .details .details-text .movie-genres {
   margin-top: .5rem;
   display: flex;
