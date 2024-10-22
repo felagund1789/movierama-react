@@ -135,7 +135,7 @@ const MovieDetailsPage = () => {
         <div className="similar-movies-container">
           <h2>Similar movies</h2>
           <div className="movies">
-            {similarMovies.slice(0, 4).map((movie) => (
+            {similarMovies.slice(0, 6).map((movie) => (
               <MovieCard
                 onClick={() => navigate(`/movies/${movie.id}`)}
                 key={movie.id}

@@ -56,6 +56,9 @@
   .details .details-content {
     grid-template-columns: 25rem 1fr;
   }
+  .details .credits {
+    grid-column: span 2;
+  }
 }
 @media(max-width: 48rem) {
   .details .details-content {
