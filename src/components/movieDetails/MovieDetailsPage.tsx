@@ -31,17 +31,25 @@ const MovieDetailsPage = () => {
   const navigate = useNavigate();
   if (!movieId) throw new Error("Movie not found is required");
 
-  const { data: movieDetails, isLoading } = useMovieDetails(Number(movieId));
+  const { data: movieDetails, isLoading, error } = useMovieDetails(Number(movieId));
   const { data: castMembers } = useMovieCast(Number(movieId));
   const { data: crewMembers } = useMovieCrew(Number(movieId));
   const { data: movieTrailers } = useMovieTrailers(Number(movieId));
   const { data: movieReviews } = useMovieReviews(Number(movieId));
   const { data: similarMovies } = useSimilarMovies(Number(movieId));
 
+  if (error) {
+    throw error;
+  }
+
+  if (!isLoading && !movieDetails) {
+    throw new Error("Movie not found");
+  }
+
   return (
     <div className="movie-details">
       <div
-        className="details"
+        className={`details ${isLoading ? "loading" : ""}`}
         style={{
           backgroundImage: `url(${imageFullBaseURL}${movieDetails?.backdrop_path})`,
         }}

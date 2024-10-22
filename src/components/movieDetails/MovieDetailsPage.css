@@ -13,6 +13,12 @@
   box-shadow: 0 0 1rem rgba(0, 0, 0, .5);
   overflow-y: auto;
 }
+@media(max-width: 60rem) {
+  .movie-details {
+    height: calc(100vh - 10rem);
+    max-height: calc(100vh - 10rem);
+  }
+}
 
 .details {
   padding: 1rem;
@@ -44,8 +50,10 @@
 }
 
 .details .details-content {
+  box-sizing: border-box;
   padding: .5rem 1rem;
   display: grid;
+  width: 100%;
   grid-template-columns: 25rem 1fr 1fr;
   flex-direction: row;
   justify-content: start;
@@ -72,6 +80,36 @@
   max-width: min(25rem, 100%);
   object-fit: cover;
 }
+.loading {
+    position: relative;
+    background-color: transparent;
+}
+.loading::after {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-100%);
+    background: linear-gradient(left bottom,
+            right top, from(transparent),
+            color-stop(rgba(255, 255, 255, 0.2)),
+            to(transparent));
+
+    background: linear-gradient(90deg, transparent,
+            rgba(255, 255, 255, 0.2), transparent);
+
+    /* Adding animation */
+    animation: loading 0.8s infinite;
+}
+
+/* Loading Animation */
+@keyframes loading {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 @media(max-width: 48rem) {
   .details .movie-poster {
     align-self: center;
