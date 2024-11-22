@@ -1,11 +1,19 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchInput from "./searchInput/SearchInput";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   return (
     <>
-      <Link style={{ textDecoration: "none" }} to="/">
+      <Link
+        style={{ textDecoration: "none" }}
+        to="/"
+        onClick={(event) => {
+          event.preventDefault();
+          navigate(-1);
+        }}
+      >
         {pathname.indexOf("/movies/") > -1 ? (
           <h1>
             <svg
